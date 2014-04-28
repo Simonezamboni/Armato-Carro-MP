@@ -10,7 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-public class PorteAperte{
+
+public class Armato-Carro{
  
      
     class MyCanvas extends JPanel{
@@ -85,6 +86,14 @@ public class PorteAperte{
             // La S aumenta la coordinata y (il carro si sposta in basso)
             }else if(e.getKeyChar()=='s' || e.getKeyChar()=='S'){
                 y += 5;
+                
+            //Gestione dei movimenti del bersaglio
+                
+            }else if(e.getKeyChar()=='i' || e.getKeyChar()=='I'){
+                yTarget -= 5;
+            // La S aumenta la coordinata y (il carro si sposta in basso)
+            }else if(e.getKeyChar()=='k' || e.getKeyChar()=='K'){
+                yTarget+= 5;
             // Lo spazio spara
             }else if(e.getKeyChar()==' '){
                 xBullet = x+200;
@@ -112,7 +121,7 @@ public class PorteAperte{
         autoUpdate.scheduleAtFixedRate(new TimerTask() {
               @Override
               public void run() {
-                if(direction==true)
+                /* if(direction==true)
                     yTarget+=10;
                 else
                     yTarget-=10;
@@ -120,14 +129,15 @@ public class PorteAperte{
                     direction = false;
                 if(yTarget<0)
                     direction = true;
-                 
+                 */ 
+                 //Ho commentato il movimento automatico
                 if (shoot==true){
                     xBullet +=10;
                     // Qui controlla se è stato colpito il bersaglio...ora colpisce il bersaglio
                                 // in un area di 10x10. Se volete renderlo più semplice...aumentate il numero
                     if(Math.abs(xBullet-1000)<20 && Math.abs(yBullet-yTarget)<20){
                         shoot = false;
-                        JOptionPane.showMessageDialog(null,"BOOOOOOMMMMMM!!!");
+                        JOptionPane.showMessageDialog(null,"BOOM BABY! That's Cuma Games!");
                     }
                     if(xBullet>1000)
                         shoot = false;
