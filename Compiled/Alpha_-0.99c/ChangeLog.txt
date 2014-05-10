@@ -1,0 +1,1 @@
+Aggiunto il reload time per lo sparo

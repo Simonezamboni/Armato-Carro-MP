@@ -40,9 +40,9 @@ public class ArmatoCarro{
         // Qui disegna il bersaglio
         public void disegnaTarget(Graphics g){
             g.setColor(new Color(255,0,0));
-            g.fillOval(1000, yTarget, 15,15);
+            g.fillOval(xTarget, yTarget, 15,15);
             g.setColor(new Color(255,0,0));
-            g.fillOval(1002, yTarget, 10,10);
+            g.fillOval(xTarget+2, yTarget, 10,10);
         }
          
          
@@ -67,7 +67,9 @@ public class ArmatoCarro{
             x = e.getX(); y = e.getY();
             canvas.repaint();
         }
-         
+        
+        public boolean up , down , left , right , screen_shot;
+        
         public void     keyPressed(KeyEvent e){}
  
         public void     keyReleased(KeyEvent e){}
@@ -75,27 +77,54 @@ public class ArmatoCarro{
         public void     keyTyped(KeyEvent e){System.out.println(e.getKeyChar());
             // Qui si decide quali tasti servono
             // La D sposta la coordinata x (il carro si sposta in avanti)
-            if (e.getKeyChar()=='d' || e.getKeyChar()=='D'){
+            if (e.getKeyChar()=='d' || e.getKeyChar()=='D')
+            {
                 x += 5;
             // La A diminuisce la coordinata x (il carro si sposta indietro)
-            }else if(e.getKeyChar()=='a' || e.getKeyChar()=='A'){
+            }
+            if (e.getKeyChar()=='a' || e.getKeyChar()=='A')
+            {
                 x -= 5;
             // La W diminuisce la coordinata y (il carro si sposta in alto)
-            }else if(e.getKeyChar()=='w' || e.getKeyChar()=='W'){
+            }
+            if (e.getKeyChar()=='w' || e.getKeyChar()=='W')
+            {
                 y -= 5;
             // La S aumenta la coordinata y (il carro si sposta in basso)
-            }else if(e.getKeyChar()=='s' || e.getKeyChar()=='S'){
-                y += 5;
-                
+            }
+            if (e.getKeyChar()=='s' || e.getKeyChar()=='S')           
+            {
+                y += 5;                
+            }
+            
             //Gestione dei movimenti del bersaglio
-                
-            }else if(e.getKeyChar()=='i' || e.getKeyChar()=='I'){
+            
+            //La I sposta il bersaglio in alto
+            if (e.getKeyChar()=='i' || e.getKeyChar()=='D')           
+            {
                 yTarget -= 5;
-            // La S aumenta la coordinata y (il carro si sposta in basso)
-            }else if(e.getKeyChar()=='k' || e.getKeyChar()=='K'){
+            }
+            
+            //La L sposta il bersaglio avanti
+            else if (e.getKeyChar()=='l' || e.getKeyChar()=='L')
+            {
+                xTarget += 5;
+            }
+            
+            //La J sposta il bersaglio a sinistra
+            else if(e.getKeyChar()=='j' || e.getKeyChar()=='J')
+            {
+                xTarget -= 5;
+            }
+            
+            //La K sposta il bersaglio in basso
+            else if(e.getKeyChar()=='k' || e.getKeyChar()=='K')
+            {
                 yTarget+= 5;
             // Lo spazio spara
-            }else if(e.getKeyChar()==' '){
+            }
+            else if((e.getKeyChar()==' ')&&(shoot == false))
+            {
                 xBullet = x+200;
                 yBullet = y+20;
                 shoot = true;
@@ -114,6 +143,7 @@ public class ArmatoCarro{
      
     int x,y;
     int yTarget = 0;
+    int xTarget = 0;
     int xBullet,yBullet;
      
     private void refreshTimer() {
@@ -132,14 +162,14 @@ public class ArmatoCarro{
                  */ 
                  //Ho commentato il movimento automatico
                 if (shoot==true){
-                    xBullet +=10;
+                    xBullet +=30;
                     // Qui controlla se è stato colpito il bersaglio...ora colpisce il bersaglio
                                 // in un area di 10x10. Se volete renderlo più semplice...aumentate il numero
-                    if(Math.abs(xBullet-1000)<20 && Math.abs(yBullet-yTarget)<20){
+                    if(Math.abs(xBullet-1500)<10 && (Math.abs(yBullet-yTarget)<20)||Math.abs(xBullet-xTarget)<20){
                         shoot = false;
                         JOptionPane.showMessageDialog(null,"BOOM BABY! That's Cuma Games!");
                     }
-                    if(xBullet>1000)
+                    if(xBullet>1500)
                         shoot = false;
                 }
                 canvas.repaint();
