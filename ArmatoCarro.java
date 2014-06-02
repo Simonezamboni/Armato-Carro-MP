@@ -12,10 +12,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ArmatoCarro{
- 
-     
+
+
     class MyCanvas extends JPanel{
- 
+
         public void disegnaBandiera (Graphics g)
         {
             g.setColor(new Color(255,0,0));
@@ -23,7 +23,7 @@ public class ArmatoCarro{
             g.setColor(new Color(100,255,255));
             g.drawRect(xBand2, yBand2, 15, 15);
         }
-        
+
         // Da qui si decide come disegnare il carro
         public void disegnaCarro(Graphics g, int x, int y){
             // Questi due comandi disegnano le ruote di raggio 25 pixel...
@@ -44,7 +44,7 @@ public class ArmatoCarro{
             // Disegna il cannone, lungo 70pixel e alto 10pixel
             g.drawRect(x+170,y,70,10);
         }
-         
+
         // Qui disegna il bersaglio
         public void disegnaTarget(Graphics g){
             g.setColor(new Color(255,0,0));
@@ -52,8 +52,8 @@ public class ArmatoCarro{
             g.setColor(new Color(255,0,0));
             g.fillOval(xTarget+2, yTarget, 10,10);
         }
-         
-         
+
+
         public void paint(Graphics g){
             // Qui si decide il colore dello sfondo...ora è grigio (tutti i
             // numeri uguali fanno tipi di grigio)
@@ -69,15 +69,15 @@ public class ArmatoCarro{
             disegnaTarget(g);
         }
     }
-     
+
     class gestoreEventi  extends MouseAdapter implements KeyListener{
-        
+
         public boolean up , down , left , right , screen_shot;
-        
+
         public void     keyPressed(KeyEvent e){}
- 
+
         public void     keyReleased(KeyEvent e){}
- 
+
         public void     keyTyped(KeyEvent e){System.out.println(e.getKeyChar());
             // Qui si decide quali tasti servono
             // La D sposta la coordinatax(il carro si sposta in avanti)
@@ -96,31 +96,31 @@ public class ArmatoCarro{
                y-= 5;
             // La S aumenta la coordinatay(il carro si sposta in basso)
             }
-            if (e.getKeyChar()=='s' || e.getKeyChar()=='S')           
+            if (e.getKeyChar()=='s' || e.getKeyChar()=='S')
             {
-               y+= 5;                
+               y+= 5;
             }
-            
+
             //Gestione dei movimenti del bersaglio
-            
+
             //La I sposta il bersaglio in alto
-            if (e.getKeyChar()=='i' || e.getKeyChar()=='D')           
+            if (e.getKeyChar()=='i' || e.getKeyChar()=='D')
             {
                 yTarget -= 5;
             }
-            
+
             //La L sposta il bersaglio avanti
             else if (e.getKeyChar()=='l' || e.getKeyChar()=='L')
             {
                 xTarget += 5;
             }
-            
+
             //La J sposta il bersaglio a sinistra
             else if(e.getKeyChar()=='j' || e.getKeyChar()=='J')
             {
                 xTarget -= 5;
             }
-            
+
             //La K sposta il bersaglio in basso
             else if(e.getKeyChar()=='k' || e.getKeyChar()=='K')
             {
@@ -136,15 +136,15 @@ public class ArmatoCarro{
             canvas.repaint();
         }
     }
-     
-     
+
+
     MyCanvas canvas;
     gestoreEventi gestEv;
     float zoomFactor = 10f;
     TimerTask timeEvent;
     boolean direction = true;
     boolean shoot = false;
-    
+
     int yTarget = 500;
     int xTarget = 100;
     int xBullet,yBullet;
@@ -156,12 +156,12 @@ public class ArmatoCarro{
     int yBand1=100;
     int x;
     int y;
-     
+
     private void refreshTimer() {
         Timer autoUpdate = new Timer();
         autoUpdate.scheduleAtFixedRate(new TimerTask() {
               @Override
-              public void run() 
+              public void run()
               {
                   if(((Math.abs(y-yBand2)<20)||(Math.abs(yBand2-y)<20))&&((Math.abs(x-xBand2)<20)||(Math.abs(xBand2-x)<20)))
                   {
@@ -169,9 +169,9 @@ public class ArmatoCarro{
                       JOptionPane.showMessageDialog(null,"Carro Wins!!!");
                   }
                   if (shoot==true){
-                      xBullet +=30;
+                      xBullet += Math.random()*50;
                       // Qui controlla se è stato colpito il bersaglio...ora colpisce il bersaglio
-                      // in un area di 10x10. Se volete renderlo più semplice...aumentate il numero 
+                      // in un area di 10x10. Se volete renderlo più semplice...aumentate il numero
                       if(Math.abs(xBullet-1500)<10 && (Math.abs(yBullet-yTarget))<20)
                       {
                           shoot = false;
@@ -187,24 +187,24 @@ public class ArmatoCarro{
               }
         }, 0, 50);
     }
-     
-     
+
+
     public ArmatoCarro(){
        x= 100;y= 100;
         gestEv = new gestoreEventi();
         canvas = new MyCanvas();
-         
+
         JFrame f = new JFrame("Grafica");
         f.setSize(500, 200);
         canvas.addMouseListener(gestEv);
         //canvas.setDoubleBuffered(true);
         f.addKeyListener(gestEv);
-         
+
         f.add(canvas);
         f.setVisible(true);
         refreshTimer();
     }
-     
+
     public static void main(String[] s)
     {
         new ArmatoCarro();
