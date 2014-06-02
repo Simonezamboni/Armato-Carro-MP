@@ -169,7 +169,7 @@ public class ArmatoCarro{
                       JOptionPane.showMessageDialog(null,"Carro Wins!!!");
                   }
                   if (shoot==true){
-                      xBullet += Math.random()*50;
+                      xBullet +=30;
                       // Qui controlla se è stato colpito il bersaglio...ora colpisce il bersaglio
                       // in un area di 10x10. Se volete renderlo più semplice...aumentate il numero
                       if(Math.abs(xBullet-1500)<10 && (Math.abs(yBullet-yTarget))<20)
